@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    <title>Product Analysis</title>
+    <link
+      rel="icon"
+      href="{{url_for('static', filename='putih.png')}}"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="latar-belakang" id="home">
+        <nav>
+          <a href="{{url_for('index')}}">
+            <img
+              src="{{url_for('static', filename='putih.png')}}"
+              class="logo"
+            />
+          </a>
+          <ul>
+            <li>
+              <a
+                class="active"
+                href="{{ url_for('index')}}"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                class="active"
+                href="{{url_for('belum')}}"
+                >Analysis</a
+              >
+            </li>
+            <li>
+              <a href="{{url_for('login') }}"
+                ><button class="btn">
+                  Login
+                </button></a
+              >
+            </li>
+            <!--{{url_for('static', filename= 'login.html') }}-->
+          </ul>
+        </nav>
+        <div class="jumbotron">
+          <img
+            src="{{url_for('static', filename= 'wee.png')}}"
+            alt="we make the better analysis"
+            class="gambar"
+          />
+        </div>
+      </div>
+    </header>
+    <!-- Form -->
+    <div class="container">
+      <div class="bg-form">
+        <form
+          action="{{ url_for('analysis') }}"
+          method="post"
+        >
+          <label for="url">URL Produk :</label>
+          <input
+            type="text"
+            name="url"
+            placeholder="Masukkan URL Produkmu"
+            required="required"
+          />
+
+          <label for="category"
+            >Pilih Kategori Produk :</label
+          >
+          <div>
+            <label for="elektronik"
+              ><input
+                type="radio"
+                name="category"
+                id="elektronik"
+                value="elektronik"
+                required
+              />Elektronik</label
+            >
+          </div>
+          <div>
+            <label for="pakaian"
+              ><input
+                type="radio"
+                name="category"
+                id="pakaian"
+                value="pakaian"
+              />Pakaian</label
+            >
+          </div>
+          <div>
+            <label for="makanan"
+              ><input
+                type="radio"
+                name="category"
+                id="makanan"
+                value="makanan"
+              />Makanan</label
+            >
+          </div>
+          <label for="ecommerce"
+            >Pilih Ecommerce :</label
+          >
+          <div>
+            <label for="shopee"
+              ><input
+                type="radio"
+                name="ecommerce"
+                id="shopee"
+                value="shopee"
+                required
+              />Shopee</label
+            >
+          </div>
+          <div>
+            <label for="tokopedia"
+              ><input
+                type="radio"
+                name="ecommerce"
+                id="tokopedia"
+                value="tokopedia"
+              />Tokopedia</label
+            >
+          </div>
+          <button type="submit">
+            Analisis Sekarang
+          </button>
+        </form>
+      </div>
+
+      <!-- Sentiment -->
+      <div class="sentiment">
+        <h3>Hasil Sentiment</h3>
+      </div>
+      <!-- End Sentiment -->
+
+      <!-- Rekomendasi -->
+      <div class="rekomendasi">
+        <h3>Rekomendasi</h3>
+        <div class="saran-2">
+          <h4>Anda menggunakan pratinjau</h4>
+          <p>
+            Jadilah anggota Proly untuk
+            mendapatkan rekomendasi
+          </p>
+          <br />
+          <!--
+                <a href="{{url_for('login') }}"><button class="btn">Login</button></a>
+                <br> <br>
+                -->
+          <a href="{{url_for('register')}}"
+            ><button class="btn">
+              Sign Up
+            </button></a
+          >
+          <p>Atau</p>
+          <a href="{{url_for('login')}}"
+            ><button class="btn">Login</button></a
+          >
+        </div>
+      </div>
+      <!-- End Rekomendasi -->
+    </div>
+    <!-- end Form -->
+  </body>
+</html>

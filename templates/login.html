@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename= 'css/login.css') }}">
+    <title>Product Analysis</title>
+    <link rel="icon" href="{{url_for('static', filename='putih.png')}}">
+    
+</head>
+<body>
+    <header>
+        <a href="{{url_for('index')}}">
+            <img src="{{url_for('static', filename='putih.png')}}"class="logo">
+        </a> <br> <br> <br> <br> <br> <br> <br> <br> <br> 
+        <div class="gambar">
+            <a href="{{ url_for('index')}}"> <img class="gambar" src="{{url_for('static', filename= 'wee.png')}}"> </a>
+        </div>
+        <div class="container">
+            <h1>Log in</h1>
+            <form method="POST" acttion="">
+                {{ form.hidden_tag() }}
+                {{ form.username }} <br> <br>
+                {{ form.password }} <br> <br>
+                <button type="submit" class="btn-login">{{ form.submit }}Login</button>
+                <div class="signup">
+                Need an Account? <a href="{{url_for('register')}}">Sign up</a>
+                </div>
+            </form>
+        </div>
+    </header>
+</body>
+</html>

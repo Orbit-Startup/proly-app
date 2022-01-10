@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    <title>Product Analysis</title>
+    <link rel="icon" href="{{url_for('static', filename='putih.png')}}">
+</head>
+<body>
+    <header>
+
+            <div class="latar-belakang" id="home">
+            <nav>
+                <a href="{{url_for('index')}}">
+                    <img src="{{url_for('static', filename='putih.png')}}"class="logo">
+                </a>
+                <ul>
+                    <li><a class="active" href="#home">Home</a></li>
+                    <li><a class="active" href="{{url_for('belum')}}">Analysis</li>
+                    <li><a href="{{url_for('login') }}"><button class="btn">Login</button></a></li>
+                    <!--{{url_for('static', filename= 'login.html') }}-->
+                </ul>
+            </nav>
+            <div class="jumbotron">
+                <img src="{{url_for('static', filename= 'wee.png')}}" alt="we make the better analysis" class="gambar">
+            </div>
+        </div>
+    </header>
+
+    <main>
+            <article id="about" class="card">
+                <h2>About</h2>
+                <!--
+                <img src="assets/image/geografis.jpg" class="featured-image" alt="about">
+                -->
+                <span class="paragraph"> 
+                    <p>Proly merupakan website analisis sentimen yang dapat anda gunakan untuk 
+                        mendapatkan Informasi sentimen positif dan negatif untuk perkembangan 
+                        toko online anda, sistem rekomendasi bagi user yang ingin membeli 
+                        produk di toko online dam sistem rekomendasi bagi anda untuk 
+                        meningkatkan toko menjadi lebih baik.</p>
+                    <h3>Keyword</h3>
+                    <p>Produk produk yang akan dianalisis adalah Elektronik, Pakaian dan
+                        makanan. Adapun e-commerce nya yaitu Shoope, Tokopedia dan Bukalapak.</p>
+                </span>
+            </article>
+
+            <article id="our" class="card">
+                <h2>Our Team</h2>
+                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. </p>
+                <div class="tim">
+                    <div>
+                        <img src = "{{url_for('static', filename= 'avtar.png')}}" class="avatar">
+                        <br>
+                        Fadel Muhammad
+                        <p class="team">(CEO)</p>
+                    </div>
+                    <div>
+                        <img src = "{{url_for('static', filename= 'avtar.png')}}"  class="avatar">
+                        <br>
+                        Ghazy Taqiyah
+                        <p class="team">(Data Science)</p>
+                    </div>
+                    <div>
+                        <img src = "{{url_for('static', filename= 'avtar.png')}}"  class="avatar">
+                        <br>
+                        Dwiki Kusuma
+                        <p class="team">(Data Science)</p>
+                    </div>
+                    
+                    <div>
+                        <img src = "{{url_for('static', filename= 'avtar.png')}}"  class="avatar">
+                        <br>
+                        Fauzan Kamil
+                        <p class="team">(Software Enginer)</p>
+                    </div>
+                    <div>
+                        <img src = "{{url_for('static', filename= 'avtar.png')}}"  class="avatar">
+                        <br>
+                        Halomoan Nababan
+                        <p class="team">(Software Enginer)</p>
+                    </div>
+                </div>
+            </article>
+            <article id="contact" class="card">
+                <h2>Contact Us</h2>
+                <!--
+                <img src= "assets/image/history.jpg" class="featured-image" alt="contact">
+                -->
+                <div class="img">                
+                    <img src = " {{url_for('static', filename= 'doo.png')}}">
+                </div>
+                <div class="kontak">
+                    <span class="contak">EMAIL<br>
+        
+                        prolyid@team.com 
+                        <br><br>
+                        PHONE<br>
+        
+                        +62 812 - 7656 - 92**
+                        <br><br>
+                        ADDRESS<br>
+                        Medan - Indonesia
+                    </span>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <p> Proly - Product Analysis &copy; 2021, We Make the Beter Analysis </p>
+    </footer>
+    <!--
+        Noted: 
+        - We make the better di gedein 
+        - Warna biru di gedein
+        - Tulisan about dan our team di tengah, jadi gak panjang
+        - Email dan proly di ubah font nya
+    -->
+</body>
+</html>
