@@ -63,6 +63,11 @@ class LoginForm(FlaskForm):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     return render_template('index.html')
+    
+#Belum
+@app.route('/belum', methods=['GET', 'POST'])
+def belum():
+    return render_template('belum.html')
 
 #Login
 @app.route('/login', methods=['GET', 'POST'])
@@ -75,7 +80,7 @@ def login():
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user)
                 #index di ganti jadi analisis
-                return redirect(url_for('analysis'))
+                return redirect(url_for('anggota'))
         
     return render_template('login.html', form=form)
 
@@ -98,15 +103,20 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-#Belum
-@app.route('/belum', methods=['GET', 'POST'])
-def belum():
-    return render_template('belum.html')
-
-#Analysis
-@ app.route('/analysis', methods=['GET', 'POST'])
+#Analisis Login yang form input
+@app.route('/anggota', methods=['GET', 'POST'])
 @login_required
+def anggota():
+    return render_template('anggota.html')
+
+
+
+#Analysis Login (Member) output
+#Ada recomended
+@app.route('/analysis', methods=['GET', 'POST'])
 def analysis():
+    #return render_template('analysis.html')
+
     url, category, ecommerce = [x for x in request.form.values()]
 
     if category == 'elektronik':
@@ -127,9 +137,34 @@ def analysis():
     percent_pos = label_pos/total_label*100
     percent_neg = label_neg/total_label*100
 
-    return render_template('analysis.html', url=url, category=category, ecommerce=ecommerce, percent_pos=percent_pos, percent_neg=percent_neg, recommend=recommend)
+    return render_template('member.html', url=url, category=category, ecommerce=ecommerce, percent_pos=percent_pos, percent_neg=percent_neg, recommend=recommend)
     
 
+#Analysis Gak ada Recomended
+@app.route('/member', methods=['GET', 'POST'])
+def member():
+    url, category, ecommerce = [x for x in request.form.values()]
+
+    if category == 'elektronik':
+        path = 'data/processed/electronic_data.csv'
+    if category == 'makanan':
+        pass
+    if category == 'pakaian':
+        pass
+    
+    if ecommerce == 'shopee':
+        df = shopeeScraper(url)
+    if ecommerce == 'tokopedia':
+        # df = tokopediaScraper(url)
+        pass
+
+    label_pos, label_neg, recommend = runApp(path, df)
+    total_label = label_pos + label_neg 
+    percent_pos = label_pos/total_label*100
+    percent_neg = label_neg/total_label*100
+
+    return render_template('analysis.html', url=url, category=category, ecommerce=ecommerce, percent_pos=percent_pos, percent_neg=percent_neg)
+    
 if __name__ == "__main__":
     app.run(debug=True)
 

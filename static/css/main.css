@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto&display=swap);
 *{
-  margin:0;
-  padding:0;
+    margin:0;
+    padding:0;
 }
 
 .jumbotron {
@@ -11,8 +11,38 @@
   text-align: center;
   color: white;
 }
+label{
+  color: aliceblue;
+  font-size: 18px;
+}
+.pilihan{
+  margin-left: -50px;
+}
+.pilihan-ecom{
+  margin-left: -50px;
+}
+h4{
+  color: aliceblue;
+  right: 50px;
+}
+.button-submit:hover{
+  background-color: #c73f16;
+  transition: .5s
+}
+.btn{
+  color: white;
+  font-size: 17px;
+  padding:7px 10px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  background-color: #ff6a3d;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-left: 95px;
+}
 .logo{
-
   padding:0 70px;
   margin: 15px;
   width: 150px;
@@ -56,22 +86,6 @@ nav ul li a{
 nav ul li a:hover{
   color: #ff6a3d;
 }
-.btn{
-  color: white;
-  font-size: 17px;
-  padding:7px 10px;
-  border-radius: 3px;
-  text-transform: uppercase;
-  background-color: #ff6a3d;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-}
-
-.btn:hover{
-  background-color: #ff4608;
-  transition: .5s;
-}
 
 a.active,a:hover{
   transition: .5s;
@@ -85,7 +99,7 @@ a.active,a:hover{
 .bg-form{
   width: 405px;
   height: 550px;
-  padding-left: 120px;
+  padding-left: 100px;
   padding-top: 50px;
   background-color: #1a223b;
   border-radius: 50px;
@@ -98,7 +112,7 @@ a.active,a:hover{
   color: white;
   margin-top: 35px;
   margin-left: 5px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Roboto;
 }
 
 .url input {
@@ -106,45 +120,14 @@ a.active,a:hover{
   height: 25px;
 }
 
-.button-form {
-  width: 75px;
-  height: 30px;
-  background-color: #ff6a3d;
-  color: white;
-  border-radius: 10px;
-  border:none;
-  margin: 5px;
-  cursor: pointer;
-}
-
-.button-form:hover{
-  background-color: #ec5628;
-  transition: .5s
-}
-
-.button-submit:hover{
-  background-color: #e95224;
-  transition: .5s
-}
-.button-submit{
-  width: 75px;
-  height: 30px;
-  background-color: #ce461d;
-  color: white;
-  border-radius: 10px;
-  border:none;
-  margin-top: 50px;
-  margin-left: 95px;
-  cursor: pointer;
-}
-
 .sentiment{
   width: 500px;
   height: 250px;
   background-color: #1a223b;
   border-radius: 50px;
-  margin-top: -600px;
+  margin-top: -500px;
   margin-left: 650px;
+  padding-bottom: 50px;
 }
 
 .sentiment h3 {
@@ -153,14 +136,22 @@ a.active,a:hover{
   padding-top: 20px;
   font-family: Arial, Helvetica, sans-serif;
 }
+.diagram{
+  position:center;
+}
+.rekomendasi ol li{
+  color:aliceblue;
 
+}
 .rekomendasi{
-  width: 500px;
+  width: 520px;
   height: 250px;
   background-color: #1a223b;
   border-radius: 50px;
   margin-top: 60px;
   margin-left: 650px;
+  padding-bottom: 60px;
+  padding-left:20px;
 }
 
 .rekomendasi h3 {
@@ -183,20 +174,13 @@ a.active,a:hover{
   margin-top: 50px;
   margin-left: 40px;
 }
-.saran{
-  position:absolute;
-  top: 750px;
-  left: 60%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  font-size: 20px;
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
-}
 .saran-2{
   text-align:center;
   color:white;
-  font-size: 20px;
-  
+  font-size: 18px;
+  padding-right: 20;
+}
+.kalimat{
+  text-align:center;
+  padding-left: 100px;
 }
