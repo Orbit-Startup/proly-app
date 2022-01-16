@@ -2,12 +2,21 @@ import re
 import requests
 import pandas as pd
 import pickle
-from collections import Counter
+import urllib3
+import time
+import json
+import warnings
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from collections import Counter, OrderedDict
+from bs4 import BeautifulSoup
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import f1_score, log_loss
+from sklearn.metrics import f1_score, log_loss, classification_report
+urllib3.disable_warnings()
+warnings.filterwarnings('ignore')
 
 def shopeeScraper (url):
     url = url
@@ -40,6 +49,93 @@ def shopeeScraper (url):
     df = df.dropna(axis=0)
     return df
 
+# TO DO: Function Tokopedia Scraper
+def tokopediaScraper(link):
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36")
+
+    driver = webdriver.Chrome(executable_path="chromedriver", options=chrome_options)
+    driver.get(link)
+
+    pageSource = driver.page_source
+    soup = BeautifulSoup(pageSource, 'html')
+    #title = soup.find("meta", property='branch:deeplink:$ios_deeplink_path',content=True)
+    get_prod_id = soup.find( 'meta', attrs={'name': 'branch:deeplink:$ios_deeplink_path'})
+    prod_id_raw = get_prod_id['content']
+    prod_id = prod_id_raw.replace('product/','')
+    print(prod_id)
+
+    ############################### PAYLOAD ###############################################
+
+
+    pay_tr1 =  r'[{"operationName":"PDPGetProductRatingQuery","variables":{"productId":"'
+    pay_tr2 = str(prod_id)
+    pay_tr3 = r'"},"query":"query PDPGetProductRatingQuery($productId: String!) {\n  productrevGetProductRating(productID: $productId) {\n    ratingScore\n    totalRating\n    totalRatingWithImage\n    detail {\n      rate\n      totalReviews\n      percentage\n      __typename\n    }\n    __typename\n  }\n}\n"}]'
+    payload_total_rating = f'{pay_tr1}{pay_tr2}{pay_tr3}'
+    data = json.loads(payload_total_rating)[0]
+    err = True
+    count = 0
+    while err:
+        try:
+            res = requests.post('https://gql.tokopedia.com/', json=data)
+            err = False
+        except:
+            err = True
+            count += 1
+            print(count, 'try')
+
+    num_rate = res.json()['data']['productrevGetProductRating']['totalRating']# ambil dari respon gql
+    page = round(num_rate/10)
+    
+    mess = []
+    rate = []
+    for x in range(page):
+        tmp = {}
+        pay1 = r'[{"operationName": "ProductReviewListQueryV2","variables": {"page": '
+        pay2 = str(x+1)
+        for star in range(5):
+            pay3 = r',"rating": '
+            pay4 = str(star)
+            pay5 = r',"withAttachment": 0,'
+            pay6 = r'"productID": "'
+            pay7 = str(prod_id)
+            pay8 = r'","perPage": 10 },"query": "query ProductReviewListQueryV2($productID: String!, $page: Int!, $perPage: Int!, $rating: Int!, $withAttachment: Int!) {\n  ProductReviewListQueryV2(productId: $productID, page: $page, perPage: $perPage, rating: $rating, withAttachment: $withAttachment) {\n    shop {\n      shopIdStr\n      name\n      image\n      url\n      __typename\n    }\n    list {\n      reviewIdStr\n      message\n      productRating\n      reviewCreateTime\n      reviewCreateTimestamp\n      isReportable\n      isAnonymous\n      imageAttachments {\n        attachmentId\n        imageUrl\n        imageThumbnailUrl\n        __typename\n      }\n      reviewResponse {\n        message\n        createTime\n        __typename\n      }\n      likeDislike {\n        totalLike\n        likeStatus\n        __typename\n      }\n      user {\n        userId\n        fullName\n        image\n        url\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n"}]'
+            payload = f'{pay1}{pay2}{pay3}{pay4}{pay5}{pay6}{pay7}{pay8}'
+            data = json.loads(payload)[0]
+        
+            #data['variables']['params'] = f'https://www.tokopedia.com/bayerhealth/redoxon-maudy-ayunda-monthly-box-redoxon-rasa-jeruk-10-tablet-x-3-unit?whid=235966'
+            data['variables']['params'] = f'https://www.tokopedia.com/bricksid/lego-71395-super-mario-peach-s-castle'
+            err = True
+            count = 0
+            while err:
+                try:
+                    res = requests.post('https://gql.tokopedia.com/',json=data)
+                    
+                    err = False
+                except:
+                    err = True
+                    count += 1
+                    print(count, 'try')
+                
+                #print(data)
+                product_desc = res.json()['data']['ProductReviewListQueryV2']['list']# ambil dari respon gql
+                #print(product_desc)
+                print(f'page: {x} rate {star}')
+                for i in range(len(product_desc)):
+                    if product_desc[i]['message'] != '':
+                        # print(product_desc[i]['message'])
+                        # print(f'-: {i}')
+                        a = product_desc[i]['message']
+                        b = product_desc[i]['productRating']
+                        mess.append(a)
+                        rate.append(b)
+                    # tmp['review'] = product_desc[i]['message']
+
+    df = pd.DataFrame(list(zip(mess, rate)),
+                columns =['reviews', 'rating'])
+    return df
+
 def trainingData(X, y):
     #membangun vector space model/pembobotan dengan tfidf
     vectorizer = TfidfVectorizer(ngram_range=(1,4), min_df=10)
@@ -51,12 +147,13 @@ def trainingData(X, y):
     #modeling sentiment
     LR_ = LogisticRegression(C=3, solver='liblinear', max_iter=150).fit(X_train, y_train)
 
-    #melakukan evaluasi
-    # yhat = LR_.predict(X_test)
-    # print('F1 score : ', f1_score(y_test, yhat, average='weighted'))
+    # melakukan evaluasi
+    yhat = LR_.predict(X_test)
+    print('F1 score : ', f1_score(y_test, yhat, average='weighted'))
 
-    # yhat_prob = LR_.predict_proba(X_test)
-    # print ('Log Loss : ', log_loss(y_test, yhat_prob))
+    yhat_prob = LR_.predict_proba(X_test)
+    print ('Log Loss : ', log_loss(y_test, yhat_prob))
+    print(classification_report(y_test, yhat))
     
     return LR_, vectorizer
 
@@ -115,9 +212,18 @@ def recommenderSystem(cos_sim, df_negative):
     
     recommend = []
     print('Ulasan Negatif yang perlu diperbaiki :')
-    for i in range(4):
-        recommend.append(df_negative.reviews[i])
-        print('{}.) {}'.format(i+1, df_negative.reviews[i]))
+    if len(df_negative.reviews) <= 5:
+        for i in range(2):
+            recommend.append(df_negative.reviews[i])
+            print('{}.) {}'.format(i+1, df_negative.reviews[i]))
+    elif len(df_negative.reviews) <= 3:
+        for i in range(1):
+            recommend.append('Produk anda sudah sangat baik')
+            print('{}.) {}'.format(i+1, df_negative.reviews[i]))
+    else:
+        for i in range(4):
+            recommend.append(df_negative.reviews[i])
+            print('{}.) {}'.format(i+1, df_negative.reviews[i]))
     return recommend
 
 def runApp(path, df):

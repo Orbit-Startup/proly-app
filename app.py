@@ -120,16 +120,16 @@ def analysis():
     url, category, ecommerce = [x for x in request.form.values()]
 
     if category == 'elektronik':
-        path = 'data/processed/electronic_data.csv'
+        path = 'data/train/electronic_data.csv'
     if category == 'makanan':
-        pass
+        path = 'data/train/food_data.csv'
     if category == 'pakaian':
-        pass
+        path = 'data/train/fashion_data.csv'
     
     if ecommerce == 'shopee':
         df = shopeeScraper(url)
     if ecommerce == 'tokopedia':
-        # df = tokopediaScraper(url)
+        df = tokopediaScraper(url)
         pass
 
     label_pos, label_neg, recommend = runApp(path, df)
@@ -146,16 +146,16 @@ def member():
     url, category, ecommerce = [x for x in request.form.values()]
 
     if category == 'elektronik':
-        path = 'data/processed/electronic_data.csv'
+        path = 'data/train/electronic_data.csv'
     if category == 'makanan':
-        pass
+        path = 'data/train/food_data.csv'
     if category == 'pakaian':
-        pass
+        path = 'data/train/fashion_data.csv'
     
     if ecommerce == 'shopee':
         df = shopeeScraper(url)
     if ecommerce == 'tokopedia':
-        # df = tokopediaScraper(url)
+        df = tokopediaScraper(url)
         pass
 
     label_pos, label_neg, recommend = runApp(path, df)
