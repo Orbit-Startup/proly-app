@@ -60,7 +60,6 @@ def tokopediaScraper(link):
 
     pageSource = driver.page_source
     soup = BeautifulSoup(pageSource, 'html')
-    #title = soup.find("meta", property='branch:deeplink:$ios_deeplink_path',content=True)
     get_prod_id = soup.find( 'meta', attrs={'name': 'branch:deeplink:$ios_deeplink_path'})
     prod_id_raw = get_prod_id['content']
     prod_id = prod_id_raw.replace('product/','')
@@ -104,7 +103,7 @@ def tokopediaScraper(link):
             payload = f'{pay1}{pay2}{pay3}{pay4}{pay5}{pay6}{pay7}{pay8}'
             data = json.loads(payload)[0]
         
-            #data['variables']['params'] = f'https://www.tokopedia.com/bayerhealth/redoxon-maudy-ayunda-monthly-box-redoxon-rasa-jeruk-10-tablet-x-3-unit?whid=235966'
+            
             data['variables']['params'] = f'https://www.tokopedia.com/bricksid/lego-71395-super-mario-peach-s-castle'
             err = True
             count = 0
@@ -118,19 +117,16 @@ def tokopediaScraper(link):
                     count += 1
                     print(count, 'try')
                 
-                #print(data)
+                
                 product_desc = res.json()['data']['ProductReviewListQueryV2']['list']# ambil dari respon gql
-                #print(product_desc)
+                
                 print(f'page: {x} rate {star}')
                 for i in range(len(product_desc)):
                     if product_desc[i]['message'] != '':
-                        # print(product_desc[i]['message'])
-                        # print(f'-: {i}')
                         a = product_desc[i]['message']
                         b = product_desc[i]['productRating']
                         mess.append(a)
                         rate.append(b)
-                    # tmp['review'] = product_desc[i]['message']
 
     df = pd.DataFrame(list(zip(mess, rate)),
                 columns =['reviews', 'rating'])
@@ -149,11 +145,8 @@ def trainingData(X, y):
 
     # melakukan evaluasi
     yhat = LR_.predict(X_test)
-    print('F1 score : ', f1_score(y_test, yhat, average='weighted'))
 
     yhat_prob = LR_.predict_proba(X_test)
-    print ('Log Loss : ', log_loss(y_test, yhat_prob))
-    print(classification_report(y_test, yhat))
     
     return LR_, vectorizer
 
@@ -186,8 +179,6 @@ def countLabel(df):
     label_positive = Counter(df.label)[1]
     label_negative = Counter(df.label)[0]
     total_label = label_positive + label_negative
-    print('Persentase Label Positive : ', (label_positive/total_label)*100)
-    print('Persentase Label Negative : ', (label_negative/total_label)*100)
     return label_positive, label_negative
 
 def filterNegativeLabel(df):
@@ -211,19 +202,15 @@ def recommenderSystem(cos_sim, df_negative):
     df_negative = df_negative.reset_index(drop=True)
     
     recommend = []
-    print('Ulasan Negatif yang perlu diperbaiki :')
     if len(df_negative.reviews) <= 5:
         for i in range(2):
             recommend.append(df_negative.reviews[i])
-            print('{}.) {}'.format(i+1, df_negative.reviews[i]))
     elif len(df_negative.reviews) <= 3:
         for i in range(1):
             recommend.append('Produk anda sudah sangat baik')
-            print('{}.) {}'.format(i+1, df_negative.reviews[i]))
     else:
         for i in range(4):
             recommend.append(df_negative.reviews[i])
-            print('{}.) {}'.format(i+1, df_negative.reviews[i]))
     return recommend
 
 def runApp(path, df):
@@ -236,5 +223,4 @@ def runApp(path, df):
     df_negative = filterNegativeLabel(df)
     cos_sim = cosineSimilarity(df_negative, vectorizer)
     recommend = recommenderSystem(cos_sim, df_negative)
-    print(recommend)
     return pos, neg, recommend

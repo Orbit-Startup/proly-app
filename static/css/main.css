@@ -1,38 +1,38 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto&display=swap);
-*{
-    margin:0;
-    padding:0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
 .jumbotron {
   font-size: 20px;
   padding: 60px;
-  background-color:#1A2238;
+  background-color: #1a2238;
   text-align: center;
   color: white;
 }
-label{
+label {
   color: aliceblue;
   font-size: 18px;
 }
-.pilihan{
+.pilihan {
   margin-left: -50px;
 }
-.pilihan-ecom{
+.pilihan-ecom {
   margin-left: -50px;
 }
-h4{
+h4 {
   color: aliceblue;
   right: 50px;
 }
-.button-submit:hover{
+.button-submit:hover {
   background-color: #c73f16;
-  transition: .5s
+  transition: 0.5s;
 }
-.btn{
+.btn {
   color: white;
   font-size: 17px;
-  padding:7px 10px;
+  padding: 7px 10px;
   border-radius: 3px;
   text-transform: uppercase;
   background-color: #ff6a3d;
@@ -42,61 +42,61 @@ h4{
   margin-top: 10px;
   margin-left: 95px;
 }
-.logo{
-  padding:0 70px;
+.logo {
+  padding: 0 70px;
   margin: 15px;
   width: 150px;
   height: auto;
 }
-.nav{
+.nav {
   text-align: right;
 }
 ul {
-  display:flex;
+  display: flex;
 }
 ul li {
   font: size 15px;
-  letter-spacing:1px
+  letter-spacing: 1px;
 }
-nav{
-  background-color: #1A2238;
+nav {
+  background-color: #1a2238;
   height: 80px;
   width: 100%;
   position: sticky;
 }
-nav ul{
+nav ul {
   float: right;
   margin-right: 20px;
 }
-nav ul li{
+nav ul li {
   display: inline-block;
   line-height: 80px;
   margin: 0 25px 15px;
   font-family: Arial, Helvetica, sans-serif;
 }
-nav ul li a{
+nav ul li a {
   color: white;
   font-size: 17px;
-  padding:7px 10px;
+  padding: 7px 10px;
   border-radius: 3px;
   text-transform: uppercase;
   text-decoration: none;
 }
 
-nav ul li a:hover{
+nav ul li a:hover {
   color: #ff6a3d;
 }
 
-a.active,a:hover{
-  transition: .5s;
-
+a.active,
+a:hover {
+  transition: 0.5s;
 }
-.gambar{
+.gambar {
   width: auto;
   height: auto;
 }
 /* ........... */
-.bg-form{
+.bg-form {
   width: 405px;
   height: 550px;
   padding-left: 100px;
@@ -104,6 +104,7 @@ a.active,a:hover{
   background-color: #1a223b;
   border-radius: 50px;
   margin-bottom: 5px;
+  font-family: Arial, Helvetica, sans-serif;
   /* position: relative; */
 }
 
@@ -120,7 +121,7 @@ a.active,a:hover{
   height: 25px;
 }
 
-.sentiment{
+.sentiment {
   width: 500px;
   height: 250px;
   background-color: #1a223b;
@@ -130,20 +131,22 @@ a.active,a:hover{
   padding-bottom: 50px;
 }
 
-.sentiment h3 {
+.sentiment h3,
+p {
   text-align: center;
   color: white;
   padding-top: 20px;
   font-family: Arial, Helvetica, sans-serif;
 }
-.diagram{
-  position:center;
-}
-.rekomendasi ol li{
-  color:aliceblue;
 
+.diagram {
+  position: center;
 }
-.rekomendasi{
+.rekomendasi ol li {
+  color: aliceblue;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.rekomendasi {
   width: 520px;
   height: 250px;
   background-color: #1a223b;
@@ -151,7 +154,7 @@ a.active,a:hover{
   margin-top: 60px;
   margin-left: 650px;
   padding-bottom: 60px;
-  padding-left:20px;
+  padding-left: 20px;
 }
 
 .rekomendasi h3 {
@@ -170,17 +173,17 @@ a.active,a:hover{
   border: none;
 }
 
-.container{
+.container {
   margin-top: 50px;
   margin-left: 40px;
 }
-.saran-2{
-  text-align:center;
-  color:white;
+.saran-2 {
+  text-align: center;
+  color: white;
   font-size: 18px;
   padding-right: 20;
 }
-.kalimat{
-  text-align:center;
+.kalimat {
+  text-align: center;
   padding-left: 100px;
 }
